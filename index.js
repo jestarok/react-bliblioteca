@@ -71,18 +71,7 @@ const server = http.createServer(async (req, res) => {
 
           result = JSON.parse(JSON.stringify(result));
 
-          const a = await pageCol
-            .findOne({
-              ISBN: queryObject.isbn,
-            })
-            .sort({ pageNumber: 1 })
-            .select({ pageNumber: 1, _id: 0 });
-          const b = await pageCol
-            .findOne({
-              ISBN: queryObject.isbn,
-            })
-            .sort({ pageNumber: -1 })
-            .select({ pageNumber: 1, _id: 0 });
+          const { a, b } = await getEdgePages(queryObject);
 
           result[0].firstPage = a;
           result[0].lastPage = b;
@@ -169,3 +158,19 @@ server.listen(PORT, () => {
     console.log('MongoDb connected');
   });
 });
+
+async function getEdgePages(queryObject) {
+  const a = await pageCol
+    .findOne({
+      ISBN: queryObject.isbn,
+    })
+    .sort({ pageNumber: 1 })
+    .select({ pageNumber: 1, _id: 0 });
+  const b = await pageCol
+    .findOne({
+      ISBN: queryObject.isbn,
+    })
+    .sort({ pageNumber: -1 })
+    .select({ pageNumber: 1, _id: 0 });
+  return { a, b };
+}
