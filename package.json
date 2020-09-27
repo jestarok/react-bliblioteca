@@ -1,0 +1,22 @@
+{
+  "name": "gbh-test",
+  "version": "1.0.0",
+  "description": "gbh library app test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node myapp.js",
+    "dev": "nodemon index",
+    "dev2": "concurrently \"nodemon index\" \"(cd gbh-library && npm run start)\""
+  },
+  "author": "Jesus Henriquez",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "mongoose": "^5.10.6",
+    "url-pattern": "^1.0.3"
+  }
+}
